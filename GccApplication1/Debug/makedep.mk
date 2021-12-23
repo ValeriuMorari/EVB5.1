@@ -4,8 +4,6 @@
 
 Button.c
 
-driver_LCD.c
-
 lcd.c
 
 io_handler.c

@@ -3,40 +3,15 @@ Archive member included because of file (symbol)
 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
                               d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32a.o (exit)
 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_copy_data.o)
-                              driver_LCD.o (__do_copy_data)
+                              lcd.o (__do_copy_data)
 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_clear_bss.o)
                               lcd.o (__do_clear_bss)
-d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
-                              driver_LCD.o (__umulhisi3)
 
 Discarded input sections
 
  .bss           0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32a.o
  .text          0x00000000        0x0 Button.o
  .bss           0x00000000        0x0 Button.o
- .text          0x00000000        0x0 driver_LCD.o
- .bss           0x00000000        0x0 driver_LCD.o
- .text.put_char
-                0x00000000       0x1e driver_LCD.o
- .text.display_welcome
-                0x00000000      0x10c driver_LCD.o
- .text.Cursor_init_position
-                0x00000000        0xc driver_LCD.o
- .text.init_LCD
-                0x00000000       0x5a driver_LCD.o
- .text.clear_screen
-                0x00000000       0x18 driver_LCD.o
- .text.next_line
-                0x00000000        0xc driver_LCD.o
- .rodata        0x00000000       0x7c driver_LCD.o
- .text.display_duty_cycle1
-                0x00000000      0x188 driver_LCD.o
- .text.display_duty_cycle2
-                0x00000000      0x184 driver_LCD.o
- .text.display_author
-                0x00000000       0xc0 driver_LCD.o
- .text.put_string
-                0x00000000       0x7e driver_LCD.o
  .text          0x00000000        0x0 lcd.o
  .bss           0x00000000        0x0 lcd.o
  .text          0x00000000        0x0 io_handler.o
@@ -90,19 +65,6 @@ Discarded input sections
                 0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_clear_bss.o)
  .text.libgcc.fmul
                 0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_clear_bss.o)
- .text          0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
- .bss           0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.mul
-                0x00000000       0x18 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.div
-                0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc   0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.prologue
-                0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.builtins
-                0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
- .text.libgcc.fmul
-                0x00000000        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
 
 Memory Configuration
 
@@ -120,7 +82,6 @@ Linker script and memory map
 
 LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32a.o
 LOAD Button.o
-LOAD driver_LCD.o
 LOAD lcd.o
 LOAD io_handler.o
 LOAD driver_interrupt.o
@@ -223,7 +184,7 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x442
+.text           0x00000000      0x596
  *(.vectors)
  .vectors       0x00000000       0x54 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32a.o
                 0x00000000                __vector_default
@@ -279,7 +240,6 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
  *(.init9)
  *(.text)
  .text          0x0000008e        0x4 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32a.o
-                0x0000008e                __vector_1
                 0x0000008e                __vector_12
                 0x0000008e                __bad_interrupt
                 0x0000008e                __vector_6
@@ -292,7 +252,6 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
                 0x0000008e                __vector_5
                 0x0000008e                __vector_4
                 0x0000008e                __vector_9
-                0x0000008e                __vector_2
                 0x0000008e                __vector_15
                 0x0000008e                __vector_8
                 0x0000008e                __vector_14
@@ -344,13 +303,19 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
                 0x000002f0                ResetPin
  .text.SetPin   0x00000380       0x86 io_handler.o
                 0x00000380                SetPin
- .text.main     0x00000406       0x38 main.o
-                0x00000406                main
-                0x0000043e                . = ALIGN (0x2)
+ .text.__vector_2
+                0x00000406       0xaa main.o
+                0x00000406                __vector_2
+ .text.__vector_1
+                0x000004b0       0x96 main.o
+                0x000004b0                __vector_1
+ .text.main     0x00000546       0x4c main.o
+                0x00000546                main
+                0x00000592                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000043e        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
-                0x0000043e                _exit
-                0x0000043e                exit
+ .fini9         0x00000592        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
+                0x00000592                _exit
+                0x00000592                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -369,16 +334,15 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000043e        0x4 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000592        0x4 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000442                _etext = .
+                0x00000596                _etext = .
 
-.data           0x00800060       0x20 load address 0x00000442
+.data           0x00800060       0x4e load address 0x00000596
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avr5/crtm32a.o
  .data          0x00800060        0x0 Button.o
- .data          0x00800060        0x0 driver_LCD.o
  .data          0x00800060        0x0 lcd.o
  .data          0x00800060        0x0 io_handler.o
  .data          0x00800060        0x0 driver_interrupt.o
@@ -387,7 +351,6 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
  .data          0x00800060        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_exit.o)
  .data          0x00800060        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_copy_data.o)
  .data          0x00800060        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_clear_bss.o)
- .data          0x00800060        0x0 d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avr5\libgcc.a(_umulhisi3.o)
  *(.data*)
  .data.RSPin    0x00800060        0x2 lcd.o
                 0x00800060                RSPin
@@ -397,33 +360,37 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
  .data.DataPort
                 0x00800063        0x1 lcd.o
                 0x00800063                DataPort
+ .data.stare_alarma.1510
+                0x00800064        0x2 main.o
+ .data.stare_motor.1517
+                0x00800066        0x2 main.o
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800064       0x1c main.o
+                0x00800068       0x46 main.o
  *(.gnu.linkonce.d*)
-                0x00800080                . = ALIGN (0x2)
-                0x00800080                _edata = .
-                0x00800080                PROVIDE (__data_end, .)
+                0x008000ae                . = ALIGN (0x2)
+                0x008000ae                _edata = .
+                0x008000ae                PROVIDE (__data_end, .)
 
-.bss            0x00800080        0x2
-                0x00800080                PROVIDE (__bss_start, .)
+.bss            0x008000ae        0x2
+                0x008000ae                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.EnablePin
-                0x00800080        0x2 lcd.o
-                0x00800080                EnablePin
+                0x008000ae        0x2 lcd.o
+                0x008000ae                EnablePin
  *(COMMON)
-                0x00800082                PROVIDE (__bss_end, .)
-                0x00000442                __data_load_start = LOADADDR (.data)
-                0x00000462                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x008000b0                PROVIDE (__bss_end, .)
+                0x00000596                __data_load_start = LOADADDR (.data)
+                0x000005e4                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800082        0x0
-                0x00800082                PROVIDE (__noinit_start, .)
+.noinit         0x008000b0        0x0
+                0x008000b0                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800082                PROVIDE (__noinit_end, .)
-                0x00800082                _end = .
-                0x00800082                PROVIDE (__heap_start, .)
+                0x008000b0                PROVIDE (__noinit_end, .)
+                0x008000b0                _end = .
+                0x008000b0                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -468,7 +435,6 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
  *(.comment)
  .comment       0x00000000       0x2f Button.o
                                  0x30 (size before relaxing)
- .comment       0x00000000       0x30 driver_LCD.o
  .comment       0x00000000       0x30 lcd.o
  .comment       0x00000000       0x30 io_handler.o
  .comment       0x00000000       0x30 driver_interrupt.o
@@ -487,91 +453,83 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x188
+.debug_aranges  0x00000000      0x130
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x28 Button.o
  .debug_aranges
-                0x00000028       0x68 driver_LCD.o
+                0x00000028       0x70 lcd.o
  .debug_aranges
-                0x00000090       0x70 lcd.o
+                0x00000098       0x28 io_handler.o
  .debug_aranges
-                0x00000100       0x28 io_handler.o
+                0x000000c0       0x20 driver_interrupt.o
  .debug_aranges
-                0x00000128       0x20 driver_interrupt.o
+                0x000000e0       0x20 driver_PWM.o
  .debug_aranges
-                0x00000148       0x20 driver_PWM.o
- .debug_aranges
-                0x00000168       0x20 main.o
+                0x00000100       0x30 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1446
+.debug_info     0x00000000      0xcb8
  *(.debug_info)
  .debug_info    0x00000000       0xfc Button.o
- .debug_info    0x000000fc      0x9ae driver_LCD.o
- .debug_info    0x00000aaa      0x5d8 lcd.o
- .debug_info    0x00001082       0xe5 io_handler.o
- .debug_info    0x00001167       0x83 driver_interrupt.o
- .debug_info    0x000011ea       0xb0 driver_PWM.o
- .debug_info    0x0000129a      0x1ac main.o
+ .debug_info    0x000000fc      0x5d8 lcd.o
+ .debug_info    0x000006d4       0xe5 io_handler.o
+ .debug_info    0x000007b9       0x83 driver_interrupt.o
+ .debug_info    0x0000083c       0xb0 driver_PWM.o
+ .debug_info    0x000008ec      0x3cc main.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x5cb
+.debug_abbrev   0x00000000      0x4de
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x7e Button.o
- .debug_abbrev  0x0000007e      0x199 driver_LCD.o
- .debug_abbrev  0x00000217      0x18d lcd.o
- .debug_abbrev  0x000003a4       0x98 io_handler.o
- .debug_abbrev  0x0000043c       0x51 driver_interrupt.o
- .debug_abbrev  0x0000048d       0x6f driver_PWM.o
- .debug_abbrev  0x000004fc       0xcf main.o
+ .debug_abbrev  0x0000007e      0x18d lcd.o
+ .debug_abbrev  0x0000020b       0x98 io_handler.o
+ .debug_abbrev  0x000002a3       0x51 driver_interrupt.o
+ .debug_abbrev  0x000002f4       0x6f driver_PWM.o
+ .debug_abbrev  0x00000363      0x17b main.o
 
-.debug_line     0x00000000      0x908
+.debug_line     0x00000000      0x79b
  *(.debug_line)
  .debug_line    0x00000000       0xdc Button.o
- .debug_line    0x000000dc      0x2e4 driver_LCD.o
- .debug_line    0x000003c0      0x266 lcd.o
- .debug_line    0x00000626       0xee io_handler.o
- .debug_line    0x00000714       0xd4 driver_interrupt.o
- .debug_line    0x000007e8       0xcd driver_PWM.o
- .debug_line    0x000008b5       0x53 main.o
+ .debug_line    0x000000dc      0x266 lcd.o
+ .debug_line    0x00000342       0xee io_handler.o
+ .debug_line    0x00000430       0xd4 driver_interrupt.o
+ .debug_line    0x00000504       0xcd driver_PWM.o
+ .debug_line    0x000005d1      0x1ca main.o
 
-.debug_frame    0x00000000      0x314
+.debug_frame    0x00000000      0x294
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 Button.o
- .debug_frame   0x00000034      0x140 driver_LCD.o
- .debug_frame   0x00000174      0x100 lcd.o
- .debug_frame   0x00000274       0x34 io_handler.o
- .debug_frame   0x000002a8       0x24 driver_interrupt.o
- .debug_frame   0x000002cc       0x24 driver_PWM.o
- .debug_frame   0x000002f0       0x24 main.o
+ .debug_frame   0x00000034      0x100 lcd.o
+ .debug_frame   0x00000134       0x34 io_handler.o
+ .debug_frame   0x00000168       0x24 driver_interrupt.o
+ .debug_frame   0x0000018c       0x24 driver_PWM.o
+ .debug_frame   0x000001b0       0xe4 main.o
 
-.debug_str      0x00000000      0x302
+.debug_str      0x00000000      0x27c
  *(.debug_str)
  .debug_str     0x00000000       0x9f Button.o
                                  0xdd (size before relaxing)
- .debug_str     0x0000009f      0x111 driver_LCD.o
-                                0x1cc (size before relaxing)
- .debug_str     0x000001b0       0xc5 lcd.o
+ .debug_str     0x0000009f      0x121 lcd.o
                                 0x20b (size before relaxing)
- .debug_str     0x00000275       0x12 io_handler.o
+ .debug_str     0x000001c0       0x12 io_handler.o
                                  0xdd (size before relaxing)
- .debug_str     0x00000287       0x28 driver_interrupt.o
+ .debug_str     0x000001d2       0x28 driver_interrupt.o
                                  0xd9 (size before relaxing)
- .debug_str     0x000002af       0x37 driver_PWM.o
+ .debug_str     0x000001fa       0x37 driver_PWM.o
                                  0xf1 (size before relaxing)
- .debug_str     0x000002e6       0x1c main.o
-                                0x104 (size before relaxing)
+ .debug_str     0x00000231       0x4b main.o
+                                0x1a7 (size before relaxing)
 
-.debug_loc      0x00000000      0x945
+.debug_loc      0x00000000      0x778
  *(.debug_loc)
  .debug_loc     0x00000000       0xe5 Button.o
- .debug_loc     0x000000e5      0x3c7 driver_LCD.o
- .debug_loc     0x000004ac      0x31b lcd.o
- .debug_loc     0x000007c7      0x158 io_handler.o
- .debug_loc     0x0000091f       0x26 driver_PWM.o
+ .debug_loc     0x000000e5      0x31b lcd.o
+ .debug_loc     0x00000400      0x158 io_handler.o
+ .debug_loc     0x00000558       0x26 driver_PWM.o
+ .debug_loc     0x0000057e      0x1fa main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -579,15 +537,14 @@ LOAD d:/tools/atmel/atmel toolchain/avr8 gcc/native/3.4.2.939/avr8-gnu-toolchain
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x118
+.debug_ranges   0x00000000       0xd0
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x18 Button.o
- .debug_ranges  0x00000018       0x58 driver_LCD.o
- .debug_ranges  0x00000070       0x60 lcd.o
- .debug_ranges  0x000000d0       0x18 io_handler.o
- .debug_ranges  0x000000e8       0x10 driver_interrupt.o
- .debug_ranges  0x000000f8       0x10 driver_PWM.o
- .debug_ranges  0x00000108       0x10 main.o
+ .debug_ranges  0x00000018       0x60 lcd.o
+ .debug_ranges  0x00000078       0x18 io_handler.o
+ .debug_ranges  0x00000090       0x10 driver_interrupt.o
+ .debug_ranges  0x000000a0       0x10 driver_PWM.o
+ .debug_ranges  0x000000b0       0x20 main.o
 
 .debug_macro
  *(.debug_macro)

@@ -10,6 +10,7 @@ main.d main.o: .././main.c \
  d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/version.h \
  d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/fuse.h \
  d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/lock.h \
+ d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/interrupt.h \
  d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/util/delay.h \
  d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/util/delay_basic.h \
  d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/math.h \
@@ -36,6 +37,8 @@ d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bi
 d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/fuse.h:
 
 d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/lock.h:
+
+d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/interrupt.h:
 
 d:\tools\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.939\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/util/delay.h:
 

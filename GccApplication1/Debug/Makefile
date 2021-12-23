@@ -37,7 +37,6 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Button.c \
-../driver_LCD.c \
 ../lcd.c \
 ../io_handler.c \
 ../driver_interrupt.c \
@@ -53,7 +52,6 @@ ASM_SRCS +=
 
 OBJS +=  \
 Button.o \
-driver_LCD.o \
 lcd.o \
 io_handler.o \
 driver_interrupt.o \
@@ -62,7 +60,6 @@ main.o
 
 OBJS_AS_ARGS +=  \
 Button.o \
-driver_LCD.o \
 lcd.o \
 io_handler.o \
 driver_interrupt.o \
@@ -71,7 +68,6 @@ main.o
 
 C_DEPS +=  \
 Button.d \
-driver_LCD.d \
 lcd.d \
 io_handler.d \
 driver_interrupt.d \
@@ -80,7 +76,6 @@ main.d
 
 C_DEPS_AS_ARGS +=  \
 Button.d \
-driver_LCD.d \
 lcd.d \
 io_handler.d \
 driver_interrupt.d \
@@ -98,8 +93,6 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

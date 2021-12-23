@@ -114,12 +114,6 @@
     <Compile Include="Button.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="driver_LCD.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="driver_LCD.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="lcd.c">
       <SubType>compile</SubType>
     </Compile>

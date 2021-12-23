@@ -3,53 +3,57 @@ GccApplication1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000442  00000000  00000000  00000094  2**1
+  0 .text         00000596  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000020  00800060  00000442  000004d6  2**0
+  1 .data         0000004e  00800060  00000596  0000062a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000002  00800080  00800080  000004f6  2**0
+  2 .bss          00000002  008000ae  008000ae  00000678  2**0
                   ALLOC
-  3 .stab         000006cc  00000000  00000000  000004f8  2**2
+  3 .stab         000006cc  00000000  00000000  00000678  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000097  00000000  00000000  00000bc4  2**0
+  4 .stabstr      00000097  00000000  00000000  00000d44  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00000c5b  2**0
+  5 .comment      0000002f  00000000  00000000  00000ddb  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 00000188  00000000  00000000  00000c8a  2**0
+  6 .debug_aranges 00000130  00000000  00000000  00000e0a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00001446  00000000  00000000  00000e12  2**0
+  7 .debug_info   00000cb8  00000000  00000000  00000f3a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000005cb  00000000  00000000  00002258  2**0
+  8 .debug_abbrev 000004de  00000000  00000000  00001bf2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000908  00000000  00000000  00002823  2**0
+  9 .debug_line   0000079b  00000000  00000000  000020d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000314  00000000  00000000  0000312c  2**2
+ 10 .debug_frame  00000294  00000000  00000000  0000286c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00000302  00000000  00000000  00003440  2**0
+ 11 .debug_str    0000027c  00000000  00000000  00002b00  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00000945  00000000  00000000  00003742  2**0
+ 12 .debug_loc    00000778  00000000  00000000  00002d7c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000118  00000000  00000000  00004087  2**0
+ 13 .debug_ranges 000000d0  00000000  00000000  000034f4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
-	put_char(0x80+0x40,0);	
-}
+//1 ms intrerupere
+//used TIMER0_COMP_vect
 
-
-void display_duty_cycle1(void)
-{
+void init_Timer0_int(void)
+{	
+	TCCR0 = 0x8B; // prescaler = 64 
    0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
-   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+	TCNT0 = 0;
+   4:	0c 94 58 02 	jmp	0x4b0	; 0x4b0 <__vector_1>
+	OCR0 = 125;
+   8:	0c 94 03 02 	jmp	0x406	; 0x406 <__vector_2>
+	TIMSK = TIMSK | 0X02;
    c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+	TIFR = 0X02;
   10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+	MCUCR |= ((1 << ISC01) | (1 << ISC00)); /*select the rising edge*/
   14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-	int i;
-	char a[42] ="DIR=0 PWM1->";
+	GICR |= (1 << INT0); /*external interrupt request 0 enable*/
   1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
@@ -58,18 +62,9 @@ void display_duty_cycle1(void)
   30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-	//duty cycle == (1..1001); NR1 = first number of duty cycle; NR2 = second number
-	
-	PORTC |= 0x70; 
   3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-	PORTC &= 0x7F; //LED1 --> ON
-	
-	Cursor_init_position();
   44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-	for (i=0;i<42;i++)
-	{
-		if(a[i] == '\0')
   48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
@@ -86,28 +81,18 @@ void display_duty_cycle1(void)
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e2 e4       	ldi	r30, 0x42	; 66
-  68:	f4 e0       	ldi	r31, 0x04	; 4
+  66:	e6 e9       	ldi	r30, 0x96	; 150
+  68:	f5 e0       	ldi	r31, 0x05	; 5
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
-	
-	PORTC |= 0x70; 
-	PORTC &= 0x7F; //LED1 --> ON
-	
-	Cursor_init_position();
-	for (i=0;i<42;i++)
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
-	{
-		if(a[i] == '\0')
-		{
-			put_char((((1000-OCR1A)/100)%10) + '0',1); //operatie de extragere a cifrei din numarul ce reprezinta duty cycle 1
-  70:	a0 38       	cpi	r26, 0x80	; 128
+  70:	ae 3a       	cpi	r26, 0xAE	; 174
   72:	b1 07       	cpc	r27, r17
   74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
 
 00000076 <__do_clear_bss>:
   76:	20 e0       	ldi	r18, 0x00	; 0
-  78:	a0 e8       	ldi	r26, 0x80	; 128
+  78:	ae ea       	ldi	r26, 0xAE	; 174
   7a:	b0 e0       	ldi	r27, 0x00	; 0
   7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
 
@@ -115,16 +100,22 @@ void display_duty_cycle1(void)
   7e:	1d 92       	st	X+, r1
 
 00000080 <.do_clear_bss_start>:
-  80:	a2 38       	cpi	r26, 0x82	; 130
+  80:	a0 3b       	cpi	r26, 0xB0	; 176
   82:	b2 07       	cpc	r27, r18
   84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
-  86:	0e 94 03 02 	call	0x406	; 0x406 <main>
-  8a:	0c 94 1f 02 	jmp	0x43e	; 0x43e <_exit>
+  86:	0e 94 a3 02 	call	0x546	; 0x546 <main>
+  8a:	0c 94 c9 02 	jmp	0x592	; 0x592 <_exit>
 
 0000008e <__bad_interrupt>:
   8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000092 <isKthBitSet>:
+#include <avr/io.h>
+
+int isKthBitSet(int n, int k)
+{
+	k = k + 1;
+	if (n & (1 << (k - 1)))
   92:	02 c0       	rjmp	.+4      	; 0x98 <isKthBitSet+0x6>
   94:	95 95       	asr	r25
   96:	87 95       	ror	r24
@@ -133,18 +124,30 @@ void display_duty_cycle1(void)
   9c:	bc 01       	movw	r22, r24
   9e:	61 70       	andi	r22, 0x01	; 1
   a0:	77 27       	eor	r23, r23
+	return 1;
+	else
+	return 0;
+}
   a2:	86 2f       	mov	r24, r22
   a4:	97 2f       	mov	r25, r23
   a6:	08 95       	ret
 
 000000a8 <ReadPin>:
+
+int ReadPin(char Port, int Pin)
+{
+	switch (Port)
   a8:	81 34       	cpi	r24, 0x41	; 65
   aa:	19 f0       	breq	.+6      	; 0xb2 <ReadPin+0xa>
   ac:	83 34       	cpi	r24, 0x43	; 67
   ae:	39 f5       	brne	.+78     	; 0xfe <ReadPin+0x56>
   b0:	13 c0       	rjmp	.+38     	; 0xd8 <ReadPin+0x30>
+	{
+		case 'A':
+			DDRA = DDRA & (0<<Pin); // setez PORT & PIN ca input
   b2:	8a b3       	in	r24, 0x1a	; 26
   b4:	1a ba       	out	0x1a, r1	; 26
+			PORTA = PORTA | (1<<Pin);  // activez rez. de Pull Up
   b6:	4b b3       	in	r20, 0x1b	; 27
   b8:	21 e0       	ldi	r18, 0x01	; 1
   ba:	30 e0       	ldi	r19, 0x00	; 0
@@ -157,13 +160,16 @@ void display_duty_cycle1(void)
   c8:	e2 f7       	brpl	.-8      	; 0xc2 <ReadPin+0x1a>
   ca:	84 2b       	or	r24, r20
   cc:	8b bb       	out	0x1b, r24	; 27
+			return isKthBitSet(PINA, Pin);
   ce:	89 b3       	in	r24, 0x19	; 25
   d0:	90 e0       	ldi	r25, 0x00	; 0
-			put_char((((1000-OCR1A)/10)%10) + '0',1);
   d2:	0e 94 49 00 	call	0x92	; 0x92 <isKthBitSet>
   d6:	08 95       	ret
+		case 'C':
+			DDRC = DDRC & (0<<Pin); // setez PORT & PIN ca input
   d8:	84 b3       	in	r24, 0x14	; 20
   da:	14 ba       	out	0x14, r1	; 20
+			PORTC = PORTC | (1<<Pin);  // activez rez. de Pull Up
   dc:	45 b3       	in	r20, 0x15	; 21
   de:	21 e0       	ldi	r18, 0x01	; 1
   e0:	30 e0       	ldi	r19, 0x00	; 0
@@ -176,110 +182,134 @@ void display_duty_cycle1(void)
   ee:	e2 f7       	brpl	.-8      	; 0xe8 <ReadPin+0x40>
   f0:	84 2b       	or	r24, r20
   f2:	85 bb       	out	0x15, r24	; 21
+			return isKthBitSet(PINC, Pin);
   f4:	83 b3       	in	r24, 0x13	; 19
   f6:	90 e0       	ldi	r25, 0x00	; 0
   f8:	0e 94 49 00 	call	0x92	; 0x92 <isKthBitSet>
   fc:	08 95       	ret
+	}
+}
   fe:	08 95       	ret
 
 00000100 <SetControlPort>:
+int EnablePin = 0;
+
+
+void SetControlPort(char Port)
+{
+	ControlPort = Port;
  100:	80 93 62 00 	sts	0x0062, r24
  104:	08 95       	ret
 
 00000106 <SetDataPort>:
+}
+
+void SetDataPort(char Port)
+{
  106:	cf 93       	push	r28
  108:	df 93       	push	r29
+	int i = 0;
+	DataPort = Port;
  10a:	80 93 63 00 	sts	0x0063, r24
+	for (i = 0; i <= 7; i++)
  10e:	c0 e0       	ldi	r28, 0x00	; 0
  110:	d0 e0       	ldi	r29, 0x00	; 0
+	{
+		ResetPin(DataPort, i);
  112:	be 01       	movw	r22, r28
  114:	80 91 63 00 	lds	r24, 0x0063
  118:	0e 94 78 01 	call	0x2f0	; 0x2f0 <ResetPin>
+
+void SetDataPort(char Port)
+{
+	int i = 0;
+	DataPort = Port;
+	for (i = 0; i <= 7; i++)
  11c:	21 96       	adiw	r28, 0x01	; 1
  11e:	c8 30       	cpi	r28, 0x08	; 8
  120:	d1 05       	cpc	r29, r1
  122:	b9 f7       	brne	.-18     	; 0x112 <SetDataPort+0xc>
+	{
+		ResetPin(DataPort, i);
+	}
+}
  124:	df 91       	pop	r29
  126:	cf 91       	pop	r28
  128:	08 95       	ret
 
 0000012a <SetRSPin>:
+
+
+void SetRSPin(int Pin)
+{
+	RSPin = Pin;
  12a:	90 93 61 00 	sts	0x0061, r25
-			while (i<42)
  12e:	80 93 60 00 	sts	0x0060, r24
+	ResetPin(ControlPort, RSPin);
  132:	bc 01       	movw	r22, r24
-			{
-				put_char(' ',1);
  134:	80 91 62 00 	lds	r24, 0x0062
  138:	0e 94 78 01 	call	0x2f0	; 0x2f0 <ResetPin>
  13c:	08 95       	ret
 
 0000013e <SetEnablePin>:
-				i++;
- 13e:	90 93 81 00 	sts	0x0081, r25
- 142:	80 93 80 00 	sts	0x0080, r24
-	{
-		if(a[i] == '\0')
-		{
-			put_char((((1000-OCR1A)/100)%10) + '0',1); //operatie de extragere a cifrei din numarul ce reprezinta duty cycle 1
-			put_char((((1000-OCR1A)/10)%10) + '0',1);
-			while (i<42)
+}
+
+void SetEnablePin(int Pin)
+{
+	EnablePin = Pin;
+ 13e:	90 93 af 00 	sts	0x00AF, r25
+ 142:	80 93 ae 00 	sts	0x00AE, r24
+	ResetPin(ControlPort, EnablePin);
  146:	bc 01       	movw	r22, r24
  148:	80 91 62 00 	lds	r24, 0x0062
  14c:	0e 94 78 01 	call	0x2f0	; 0x2f0 <ResetPin>
-				i++;
-			}
-			break;
-		}
-		
-		put_char(a[i],1);
  150:	08 95       	ret
 
 00000152 <SendCommand>:
+}
+
+void SendCommand(char Data)
+{
+	switch(DataPort)
  152:	90 91 63 00 	lds	r25, 0x0063
-		
-		if (i==15)
  156:	92 34       	cpi	r25, 0x42	; 66
  158:	59 f0       	breq	.+22     	; 0x170 <SendCommand+0x1e>
  15a:	18 f4       	brcc	.+6      	; 0x162 <SendCommand+0x10>
-		{
-			next_line();
  15c:	91 34       	cpi	r25, 0x41	; 65
  15e:	69 f4       	brne	.+26     	; 0x17a <SendCommand+0x28>
-	
-	PORTC |= 0x70; 
-	PORTC &= 0x7F; //LED1 --> ON
-	
-	Cursor_init_position();
-	for (i=0;i<42;i++)
  160:	05 c0       	rjmp	.+10     	; 0x16c <SendCommand+0x1a>
  162:	93 34       	cpi	r25, 0x43	; 67
  164:	39 f0       	breq	.+14     	; 0x174 <SendCommand+0x22>
  166:	94 34       	cpi	r25, 0x44	; 68
  168:	41 f4       	brne	.+16     	; 0x17a <SendCommand+0x28>
  16a:	06 c0       	rjmp	.+12     	; 0x178 <SendCommand+0x26>
+	{
+		case 'A':
+			PORTA = Data;
  16c:	8b bb       	out	0x1b, r24	; 27
-		}
-		
-		
-	}
-	
-}
+			break;
  16e:	05 c0       	rjmp	.+10     	; 0x17a <SendCommand+0x28>
+		case 'B':
+			PORTB = Data;
  170:	88 bb       	out	0x18, r24	; 24
+			break;
  172:	03 c0       	rjmp	.+6      	; 0x17a <SendCommand+0x28>
+		case 'C':
+			PORTC = Data;
  174:	85 bb       	out	0x15, r24	; 21
+			break;
  176:	01 c0       	rjmp	.+2      	; 0x17a <SendCommand+0x28>
- 178:	82 bb       	out	0x12, r24	; 18
- 17a:	60 91 80 00 	lds	r22, 0x0080
- 17e:	70 91 81 00 	lds	r23, 0x0081
- 182:	80 91 62 00 	lds	r24, 0x0062
- 186:	0e 94 c0 01 	call	0x380	; 0x380 <SetPin>
+		case 'D':
 			PORTD = Data;
+ 178:	82 bb       	out	0x12, r24	; 18
 			break;
 	}
 	
 	SET_ENABLE;
+ 17a:	60 91 ae 00 	lds	r22, 0x00AE
+ 17e:	70 91 af 00 	lds	r23, 0x00AF
+ 182:	80 91 62 00 	lds	r24, 0x0062
+ 186:	0e 94 c0 01 	call	0x380	; 0x380 <SetPin>
 	SET_COMMAND;
  18a:	60 91 60 00 	lds	r22, 0x0060
  18e:	70 91 61 00 	lds	r23, 0x0061
@@ -299,8 +329,8 @@ void display_duty_cycle1(void)
  1a4:	00 00       	nop
 	_delay_ms(2);
 	CLEAR_ENABLE;
- 1a6:	60 91 80 00 	lds	r22, 0x0080
- 1aa:	70 91 81 00 	lds	r23, 0x0081
+ 1a6:	60 91 ae 00 	lds	r22, 0x00AE
+ 1aa:	70 91 af 00 	lds	r23, 0x00AF
  1ae:	80 91 62 00 	lds	r24, 0x0062
  1b2:	0e 94 78 01 	call	0x2f0	; 0x2f0 <ResetPin>
  1b6:	8f e3       	ldi	r24, 0x3F	; 63
@@ -354,8 +384,8 @@ void SendData(char Data)
 	
 	
 	SET_ENABLE;
- 1ec:	60 91 80 00 	lds	r22, 0x0080
- 1f0:	70 91 81 00 	lds	r23, 0x0081
+ 1ec:	60 91 ae 00 	lds	r22, 0x00AE
+ 1f0:	70 91 af 00 	lds	r23, 0x00AF
  1f4:	80 91 62 00 	lds	r24, 0x0062
  1f8:	0e 94 c0 01 	call	0x380	; 0x380 <SetPin>
 	SET_DATA;
@@ -371,8 +401,8 @@ void SendData(char Data)
  216:	00 00       	nop
 	_delay_ms(2);
 	CLEAR_ENABLE;
- 218:	60 91 80 00 	lds	r22, 0x0080
- 21c:	70 91 81 00 	lds	r23, 0x0081
+ 218:	60 91 ae 00 	lds	r22, 0x00AE
+ 21c:	70 91 af 00 	lds	r23, 0x00AF
  220:	80 91 62 00 	lds	r24, 0x0062
  224:	0e 94 78 01 	call	0x2f0	; 0x2f0 <ResetPin>
  228:	8f e3       	ldi	r24, 0x3F	; 63
@@ -724,47 +754,278 @@ void SetPin(char Port, int Pin)
  402:	82 bb       	out	0x12, r24	; 18
  404:	08 95       	ret
 
-00000406 <main>:
+00000406 <__vector_2>:
+#include "Button.h"
+#include "lcd.h"
+
+/*Interrupt Service Routine for INT1*/
+ISR(INT1_vect)
+{
+ 406:	1f 92       	push	r1
+ 408:	0f 92       	push	r0
+ 40a:	0f b6       	in	r0, 0x3f	; 63
+ 40c:	0f 92       	push	r0
+ 40e:	11 24       	eor	r1, r1
+ 410:	2f 93       	push	r18
+ 412:	3f 93       	push	r19
+ 414:	4f 93       	push	r20
+ 416:	5f 93       	push	r21
+ 418:	6f 93       	push	r22
+ 41a:	7f 93       	push	r23
+ 41c:	8f 93       	push	r24
+ 41e:	9f 93       	push	r25
+ 420:	af 93       	push	r26
+ 422:	bf 93       	push	r27
+ 424:	cf 93       	push	r28
+ 426:	df 93       	push	r29
+ 428:	ef 93       	push	r30
+ 42a:	ff 93       	push	r31
+	static int stare_alarma = 1;
+	char *text = "unknown";
+	if (stare_alarma == 1)
+ 42c:	80 91 64 00 	lds	r24, 0x0064
+ 430:	90 91 65 00 	lds	r25, 0x0065
+ 434:	01 97       	sbiw	r24, 0x01	; 1
+ 436:	61 f4       	brne	.+24     	; 0x450 <__vector_2+0x4a>
+	{
+		SetPin('C', 7);
+ 438:	67 e0       	ldi	r22, 0x07	; 7
+ 43a:	70 e0       	ldi	r23, 0x00	; 0
+ 43c:	83 e4       	ldi	r24, 0x43	; 67
+ 43e:	0e 94 c0 01 	call	0x380	; 0x380 <SetPin>
+		stare_alarma = 0;
+ 442:	10 92 65 00 	sts	0x0065, r1
+ 446:	10 92 64 00 	sts	0x0064, r1
+		text = "Alarma ON";
+ 44a:	c8 e6       	ldi	r28, 0x68	; 104
+ 44c:	d0 e0       	ldi	r29, 0x00	; 0
+ 44e:	0d c0       	rjmp	.+26     	; 0x46a <__vector_2+0x64>
+	}
+	else
+	{
+		text = "Alarma OFF";
+		ResetPin('C', 7);
+ 450:	67 e0       	ldi	r22, 0x07	; 7
+ 452:	70 e0       	ldi	r23, 0x00	; 0
+ 454:	83 e4       	ldi	r24, 0x43	; 67
+ 456:	0e 94 78 01 	call	0x2f0	; 0x2f0 <ResetPin>
+		stare_alarma = 1;
+ 45a:	81 e0       	ldi	r24, 0x01	; 1
+ 45c:	90 e0       	ldi	r25, 0x00	; 0
+ 45e:	90 93 65 00 	sts	0x0065, r25
+ 462:	80 93 64 00 	sts	0x0064, r24
+		stare_alarma = 0;
+		text = "Alarma ON";
+	}
+	else
+	{
+		text = "Alarma OFF";
+ 466:	c2 e7       	ldi	r28, 0x72	; 114
+ 468:	d0 e0       	ldi	r29, 0x00	; 0
+		ResetPin('C', 7);
+		stare_alarma = 1;
+	}
+	ClearScreen();
+ 46a:	0e 94 1b 01 	call	0x236	; 0x236 <ClearScreen>
+	CursorAtInitPosition();
+ 46e:	0e 94 1f 01 	call	0x23e	; 0x23e <CursorAtInitPosition>
+	SendText(text);
+ 472:	ce 01       	movw	r24, r28
+ 474:	0e 94 54 01 	call	0x2a8	; 0x2a8 <SendText>
+ 478:	2f ef       	ldi	r18, 0xFF	; 255
+ 47a:	89 e6       	ldi	r24, 0x69	; 105
+ 47c:	98 e1       	ldi	r25, 0x18	; 24
+ 47e:	21 50       	subi	r18, 0x01	; 1
+ 480:	80 40       	sbci	r24, 0x00	; 0
+ 482:	90 40       	sbci	r25, 0x00	; 0
+ 484:	e1 f7       	brne	.-8      	; 0x47e <__vector_2+0x78>
+ 486:	00 c0       	rjmp	.+0      	; 0x488 <__vector_2+0x82>
+ 488:	00 00       	nop
+	_delay_ms(500);  	/* Software debouncing control delay */
+}
+ 48a:	ff 91       	pop	r31
+ 48c:	ef 91       	pop	r30
+ 48e:	df 91       	pop	r29
+ 490:	cf 91       	pop	r28
+ 492:	bf 91       	pop	r27
+ 494:	af 91       	pop	r26
+ 496:	9f 91       	pop	r25
+ 498:	8f 91       	pop	r24
+ 49a:	7f 91       	pop	r23
+ 49c:	6f 91       	pop	r22
+ 49e:	5f 91       	pop	r21
+ 4a0:	4f 91       	pop	r20
+ 4a2:	3f 91       	pop	r19
+ 4a4:	2f 91       	pop	r18
+ 4a6:	0f 90       	pop	r0
+ 4a8:	0f be       	out	0x3f, r0	; 63
+ 4aa:	0f 90       	pop	r0
+ 4ac:	1f 90       	pop	r1
+ 4ae:	18 95       	reti
+
+000004b0 <__vector_1>:
+
+/*Interrupt Service Routine for INT0*/
+ISR(INT0_vect)
+{
+ 4b0:	1f 92       	push	r1
+ 4b2:	0f 92       	push	r0
+ 4b4:	0f b6       	in	r0, 0x3f	; 63
+ 4b6:	0f 92       	push	r0
+ 4b8:	11 24       	eor	r1, r1
+ 4ba:	2f 93       	push	r18
+ 4bc:	3f 93       	push	r19
+ 4be:	4f 93       	push	r20
+ 4c0:	5f 93       	push	r21
+ 4c2:	6f 93       	push	r22
+ 4c4:	7f 93       	push	r23
+ 4c6:	8f 93       	push	r24
+ 4c8:	9f 93       	push	r25
+ 4ca:	af 93       	push	r26
+ 4cc:	bf 93       	push	r27
+ 4ce:	cf 93       	push	r28
+ 4d0:	df 93       	push	r29
+ 4d2:	ef 93       	push	r30
+ 4d4:	ff 93       	push	r31
+	static int stare_motor = 1;
+	char *text = "unknown";
+	
+	if (stare_motor == 0)
+ 4d6:	80 91 66 00 	lds	r24, 0x0066
+ 4da:	90 91 67 00 	lds	r25, 0x0067
+ 4de:	89 2b       	or	r24, r25
+ 4e0:	49 f4       	brne	.+18     	; 0x4f4 <__vector_1+0x44>
+	{
+		text = "MOTOR OFF";
+		stare_motor = 1;
+ 4e2:	81 e0       	ldi	r24, 0x01	; 1
+ 4e4:	90 e0       	ldi	r25, 0x00	; 0
+ 4e6:	90 93 67 00 	sts	0x0067, r25
+ 4ea:	80 93 66 00 	sts	0x0066, r24
+	static int stare_motor = 1;
+	char *text = "unknown";
+	
+	if (stare_motor == 0)
+	{
+		text = "MOTOR OFF";
+ 4ee:	cd e7       	ldi	r28, 0x7D	; 125
+ 4f0:	d0 e0       	ldi	r29, 0x00	; 0
+ 4f2:	06 c0       	rjmp	.+12     	; 0x500 <__vector_1+0x50>
+		stare_motor = 1;
+	}else
+	{
+		text = "MOTOR ON !";
+		stare_motor = 0;
+ 4f4:	10 92 67 00 	sts	0x0067, r1
+ 4f8:	10 92 66 00 	sts	0x0066, r1
+	{
+		text = "MOTOR OFF";
+		stare_motor = 1;
+	}else
+	{
+		text = "MOTOR ON !";
+ 4fc:	c7 e8       	ldi	r28, 0x87	; 135
+ 4fe:	d0 e0       	ldi	r29, 0x00	; 0
+		stare_motor = 0;
+	}
+	
+	ClearScreen();
+ 500:	0e 94 1b 01 	call	0x236	; 0x236 <ClearScreen>
+	CursorAtInitPosition();
+ 504:	0e 94 1f 01 	call	0x23e	; 0x23e <CursorAtInitPosition>
+	SendText(text);
+ 508:	ce 01       	movw	r24, r28
+ 50a:	0e 94 54 01 	call	0x2a8	; 0x2a8 <SendText>
+ 50e:	2f ef       	ldi	r18, 0xFF	; 255
+ 510:	89 e6       	ldi	r24, 0x69	; 105
+ 512:	98 e1       	ldi	r25, 0x18	; 24
+ 514:	21 50       	subi	r18, 0x01	; 1
+ 516:	80 40       	sbci	r24, 0x00	; 0
+ 518:	90 40       	sbci	r25, 0x00	; 0
+ 51a:	e1 f7       	brne	.-8      	; 0x514 <__vector_1+0x64>
+ 51c:	00 c0       	rjmp	.+0      	; 0x51e <__vector_1+0x6e>
+ 51e:	00 00       	nop
+	_delay_ms(500);  	/* Software debouncing control delay */
+	
+}
+ 520:	ff 91       	pop	r31
+ 522:	ef 91       	pop	r30
+ 524:	df 91       	pop	r29
+ 526:	cf 91       	pop	r28
+ 528:	bf 91       	pop	r27
+ 52a:	af 91       	pop	r26
+ 52c:	9f 91       	pop	r25
+ 52e:	8f 91       	pop	r24
+ 530:	7f 91       	pop	r23
+ 532:	6f 91       	pop	r22
+ 534:	5f 91       	pop	r21
+ 536:	4f 91       	pop	r20
+ 538:	3f 91       	pop	r19
+ 53a:	2f 91       	pop	r18
+ 53c:	0f 90       	pop	r0
+ 53e:	0f be       	out	0x3f, r0	; 63
+ 540:	0f 90       	pop	r0
+ 542:	1f 90       	pop	r1
+ 544:	18 95       	reti
+
+00000546 <main>:
 
 int main(void)
 {	
 	char *text = "Control Alarma";
 	char *text1 = "Motor Pornit";
 	InitLcd('B', 'A', 1, 0);
- 406:	20 e0       	ldi	r18, 0x00	; 0
- 408:	30 e0       	ldi	r19, 0x00	; 0
- 40a:	41 e0       	ldi	r20, 0x01	; 1
- 40c:	50 e0       	ldi	r21, 0x00	; 0
- 40e:	61 e4       	ldi	r22, 0x41	; 65
- 410:	82 e4       	ldi	r24, 0x42	; 66
- 412:	0e 94 27 01 	call	0x24e	; 0x24e <InitLcd>
+ 546:	20 e0       	ldi	r18, 0x00	; 0
+ 548:	30 e0       	ldi	r19, 0x00	; 0
+ 54a:	41 e0       	ldi	r20, 0x01	; 1
+ 54c:	50 e0       	ldi	r21, 0x00	; 0
+ 54e:	61 e4       	ldi	r22, 0x41	; 65
+ 550:	82 e4       	ldi	r24, 0x42	; 66
+ 552:	0e 94 27 01 	call	0x24e	; 0x24e <InitLcd>
 	SendText(text);
- 416:	84 e6       	ldi	r24, 0x64	; 100
- 418:	90 e0       	ldi	r25, 0x00	; 0
- 41a:	0e 94 54 01 	call	0x2a8	; 0x2a8 <SendText>
+ 556:	82 e9       	ldi	r24, 0x92	; 146
+ 558:	90 e0       	ldi	r25, 0x00	; 0
+ 55a:	0e 94 54 01 	call	0x2a8	; 0x2a8 <SendText>
+	DDRD=0;			/* PORTD as input */
+ 55e:	11 ba       	out	0x11, r1	; 17
+	PORTD=0xFF;		/* Make pull up high */
+ 560:	8f ef       	ldi	r24, 0xFF	; 255
+ 562:	82 bb       	out	0x12, r24	; 18
+	GICR = 1<<INT0 | 1<<INT1;		/* Enable INT0 / INT1 */
+ 564:	80 ec       	ldi	r24, 0xC0	; 192
+ 566:	8b bf       	out	0x3b, r24	; 59
+	MCUCR = 1<<ISC01 | 1<<ISC00;  /* Trigger INT0 on rising edge */
+ 568:	83 e0       	ldi	r24, 0x03	; 3
+ 56a:	85 bf       	out	0x35, r24	; 53
+	MCUCR = 1<<ISC11 | 1<<ISC10;  /* Trigger INT1 on rising edge */
+ 56c:	8c e0       	ldi	r24, 0x0C	; 12
+ 56e:	85 bf       	out	0x35, r24	; 53
+	
+	sei(); /* Enable Global Interrupt */
+ 570:	78 94       	sei
 	
 	while(1) //infinite loop
 	{
 		if (ReadPin('C', 0) == 0)
- 41e:	60 e0       	ldi	r22, 0x00	; 0
- 420:	70 e0       	ldi	r23, 0x00	; 0
- 422:	83 e4       	ldi	r24, 0x43	; 67
- 424:	0e 94 54 00 	call	0xa8	; 0xa8 <ReadPin>
- 428:	89 2b       	or	r24, r25
- 42a:	c9 f7       	brne	.-14     	; 0x41e <main+0x18>
+ 572:	60 e0       	ldi	r22, 0x00	; 0
+ 574:	70 e0       	ldi	r23, 0x00	; 0
+ 576:	83 e4       	ldi	r24, 0x43	; 67
+ 578:	0e 94 54 00 	call	0xa8	; 0xa8 <ReadPin>
+ 57c:	89 2b       	or	r24, r25
+ 57e:	c9 f7       	brne	.-14     	; 0x572 <main+0x2c>
 		{
 			ClearScreen();
- 42c:	0e 94 1b 01 	call	0x236	; 0x236 <ClearScreen>
+ 580:	0e 94 1b 01 	call	0x236	; 0x236 <ClearScreen>
 			CursorAtInitPosition();
- 430:	0e 94 1f 01 	call	0x23e	; 0x23e <CursorAtInitPosition>
+ 584:	0e 94 1f 01 	call	0x23e	; 0x23e <CursorAtInitPosition>
 			SendText(text1);
- 434:	83 e7       	ldi	r24, 0x73	; 115
- 436:	90 e0       	ldi	r25, 0x00	; 0
- 438:	0e 94 54 01 	call	0x2a8	; 0x2a8 <SendText>
- 43c:	f0 cf       	rjmp	.-32     	; 0x41e <main+0x18>
+ 588:	81 ea       	ldi	r24, 0xA1	; 161
+ 58a:	90 e0       	ldi	r25, 0x00	; 0
+ 58c:	0e 94 54 01 	call	0x2a8	; 0x2a8 <SendText>
+ 590:	f0 cf       	rjmp	.-32     	; 0x572 <main+0x2c>
 
-0000043e <_exit>:
- 43e:	f8 94       	cli
+00000592 <_exit>:
+ 592:	f8 94       	cli
 
-00000440 <__stop_program>:
- 440:	ff cf       	rjmp	.-2      	; 0x440 <__stop_program>
+00000594 <__stop_program>:
+ 594:	ff cf       	rjmp	.-2      	; 0x594 <__stop_program>
